@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Management;
+﻿using System.Collections.Generic;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
 using Stubble.Core.Builders;
@@ -21,6 +16,9 @@ namespace ClassLibrary1
         [Parameter]
         public string json { get; set; }
 
+        [Parameter]
+        public SwitchParameter useCustomWhiteSpaceClearner { get; set; }
+
 
         protected override void ProcessRecord()
         {
@@ -28,7 +26,10 @@ namespace ClassLibrary1
             var serializer = new JavaScriptSerializer();
             object data = serializer.Deserialize<IDictionary<string, object>>(json);
             string output = stubble.Render(template, data);
-            output = CustomWhiteSpaceCleaner(output);
+            if (useCustomWhiteSpaceClearner)
+            {
+                output = CustomWhiteSpaceCleaner(output);
+            }
             WriteObject(output);
 
         }

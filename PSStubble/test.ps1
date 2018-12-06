@@ -1,7 +1,8 @@
 ﻿Write-Host 'Importing module:' -ForegroundColor Green;
 
 Import-Module .\PSStubble.dll;
-Get-Command -module PSStubble;
+
+Get-help Invoke-Stubble -full;
 
 Write-Host 'Press any key to continue...'  -ForegroundColor Yellow;
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
