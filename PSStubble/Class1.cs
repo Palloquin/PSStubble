@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json; /* 11-12-2018: USING Newtonsoft.Json version 11, 12 seems incompatible with Stubble.Extensions.JsonNet */
 using Stubble.Core.Builders;
-using System.Web.Script.Serialization;
+using Stubble.Extensions.JsonNet;
 
 namespace ClassLibrary1
 {
@@ -22,9 +23,8 @@ namespace ClassLibrary1
 
         protected override void ProcessRecord()
         {
-            var stubble = new StubbleBuilder().Build();
-            var serializer = new JavaScriptSerializer();
-            object data = serializer.Deserialize<IDictionary<string, object>>(json);
+            var stubble = new StubbleBuilder().Configure(settings => settings.AddJsonNet()).Build();
+            var data = JsonConvert.DeserializeObject(json);
             string output = stubble.Render(template, data);
             if (useCustomWhiteSpaceClearner)
             {

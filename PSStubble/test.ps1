@@ -10,9 +10,9 @@ $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
 $json = '{
   "header": "Colors",
   "items": [
-      {"name": "red", "first": true, "url": "#Red"},
-      {"name": "green", "link": true, "url": "#Green"},
-      {"name": "blue", "link": true, "url": "#Blue"}
+      {"name": "red $", "first": true, "url": "#Red"},
+      {"name": "green €", "link": true, "url": "#Green"},
+      {"name": "blue @", "link": true, "url": "#Blue"}
   ],
   "empty": false
 }'
