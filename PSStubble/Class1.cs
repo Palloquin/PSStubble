@@ -37,7 +37,7 @@ namespace ClassLibrary1
         internal string CustomWhiteSpaceCleaner( string input)
         {
 
-            string output = Regex.Replace(input, "{\\|\\s*\\|}((\\r\\n)|\\r|\\n)", "");
+            string output = Regex.Replace(input, "{\\|\\s*\\|}((\\r\\n)|\\r|\\n)?", "");
             output = Regex.Replace(output, "({\\|)|(\\|})", "");
             //output = Regex.Replace(output, "\\r\\n", "");
 
