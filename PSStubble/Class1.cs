@@ -3,6 +3,7 @@ using System.Management.Automation;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json; /* 11-12-2018: USING Newtonsoft.Json version 11, 12 seems incompatible with Stubble.Extensions.JsonNet */
 using Stubble.Core.Builders;
+using Stubble.Core.Settings;
 using Stubble.Extensions.JsonNet;
 
 namespace ClassLibrary1
@@ -20,14 +21,26 @@ namespace ClassLibrary1
         [Parameter]
         public SwitchParameter useCustomWhiteSpaceClearner { get; set; }
 
+        [Parameter]
+        public SwitchParameter SkipHtmlEncoding { get; set; }
+
 
         protected override void ProcessRecord()
         {
-            var stubble = new StubbleBuilder().Configure(settings => settings.AddJsonNet()).Build();
-            var data = JsonConvert.DeserializeObject(json);
-            string output = stubble.Render(template, data);
-            if (useCustomWhiteSpaceClearner)
+
+            var s = new RendererSettingsBuilder().BuildSettings();
+            if (SkipHtmlEncoding)
             {
+                s.RenderSettings.SkipHtmlEncoding = true;
+            }
+            
+
+            var stubble = new StubbleBuilder().Configure(settings => settings.AddJsonNet()).Build();
+            
+            var data = JsonConvert.DeserializeObject(json);
+            string output = stubble.Render(template, data, s.RenderSettings);
+            if (useCustomWhiteSpaceClearner)
+            {   
                 output = CustomWhiteSpaceCleaner(output);
             }
             WriteObject(output);

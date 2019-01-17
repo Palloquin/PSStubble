@@ -12,7 +12,8 @@ $json = '{
   "items": [
       {"name": "red $", "first": true, "url": "#Red"},
       {"name": "green €", "link": true, "url": "#Green"},
-      {"name": "blue @", "link": true, "url": "#Blue"}
+      {"name": "blue @", "link": true, "url": "#Blue"},
+      {"name": "verifiëren", "link": true, "url": "#Blue"}
   ],
   "empty": false
 }'
@@ -42,3 +43,8 @@ Invoke-Stubble -template $template -json $json;
 Write-Host 'Press any key to continue...' -ForegroundColor Yellow;
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
 
+Write-Host  'Testing merge no html encodign:'  -ForegroundColor Green;
+Invoke-Stubble -template $template -json $json -SkipHtmlEncoding;
+
+Write-Host 'Press any key to continue...' -ForegroundColor Yellow;
+$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
